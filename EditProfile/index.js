@@ -11,29 +11,20 @@ document.getElementById('btn_nav').onclick = function () {
         blur.style.display = 'none';
 
     }
-}   
-
-function previewImg() {
-
-    if(fileInput.files.length>2){
-        alert('You are only allowed to upload a maximum of 2 images!');
-        return false;
-    }
-
-    previewImgContainer.innerHTML = "";
-
-    for (i of fileInput.files) {
-        let reader = new FileReader();
-        let figure = document.createElement("div");
-        let figCap = document.createElement("figcaption");
-        figCap.innerText = "";
-        figure.appendChild(figCap);
-        reader.onload = () => {     
-            let img = document.createElement("img");
-            img.setAttribute("src", reader.result);
-            figure.insertBefore(img, figCap);
-        }
-        previewImgContainer.appendChild(figure);
-        reader.readAsDataURL(i);
-    }
 }
+
+
+// sửa
+function previewBeforeUpload(id){
+    document.querySelector("#"+id).addEventListener("change",function(e){
+      if(e.target.files.length == 0){
+        return;
+      }
+      let file = e.target.files[0];
+      let url = URL.createObjectURL(file);
+      document.querySelector("#"+id+"-preview div").innerText = file.name;
+      document.querySelector("#"+id+"-preview img").src = url;
+    });
+  }
+  
+  previewBeforeUpload("file-1");
